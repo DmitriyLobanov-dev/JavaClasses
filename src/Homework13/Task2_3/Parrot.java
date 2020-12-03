@@ -17,4 +17,11 @@ public class Parrot extends Pet {
     public String toString() {
         return "Parrot{ " + super.toString() + '}';
     }
+
+    @Override
+    public int compareTo(Pet o) {
+        String cr1 = this.getName() + this.getBreed();
+        String cr2 = o.getName() + o.getBreed();
+        return cr1.compareTo(cr2);
+    }
 }

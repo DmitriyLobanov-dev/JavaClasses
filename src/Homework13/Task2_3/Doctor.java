@@ -9,7 +9,7 @@ import java.util.Objects;
  * качестве значения – само животное.
  */
 
-public class Doctor {
+public class Doctor implements Comparable<Doctor> {
 
     private String name;
     private int id;
@@ -55,5 +55,10 @@ public class Doctor {
                 "name='" + name + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Doctor o) {
+        return this.getId() - o.getId();
     }
 }

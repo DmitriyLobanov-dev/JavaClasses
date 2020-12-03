@@ -9,7 +9,7 @@ import java.util.Objects;
  * качестве значения – само животное.
  */
 
-public abstract class Pet {
+public abstract class Pet implements Comparable<Pet>{
 
     private String name;
     private String breed;
