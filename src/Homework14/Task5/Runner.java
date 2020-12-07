@@ -22,8 +22,6 @@ public class Runner {
             arrayValues[i] = i + 1;
         }
 
-//        Random randomValue = new Random();
-//        Integer valueToRemove = randomValue.nextInt();
         Integer valueToRemove = (int) (Math.random() * (maxValue - minValue)) + minValue;
         List<Integer> listValues = new ArrayList<>(Arrays.asList(arrayValues));
         System.out.println("The original sequence is: " + "\n" + listValues);
