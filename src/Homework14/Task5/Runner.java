@@ -1,9 +1,7 @@
 package Homework14.Task5;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Дана упорядоченная последовательность чисел от 1 до N.
@@ -16,15 +14,33 @@ public class Runner {
 
     public static void main(String[] args) {
 
-//        List<Integer> list = List.of(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
-//        Integer[] array = (Integer[]) list.toArray();
+        int minValue = 1;
+        int maxValue = 25;
 
-
-
-        Set<Integer> values = new TreeSet<>();
-        for (Integer el : values) {
-
+        Integer[] arrayValues = new Integer[maxValue];
+        for (int i = 0; i < arrayValues.length; i++) {
+            arrayValues[i] = i + 1;
         }
-    }
 
+//        Random randomValue = new Random();
+//        Integer valueToRemove = randomValue.nextInt();
+        Integer valueToRemove = (int) (Math.random() * (maxValue - minValue)) + minValue;
+        List<Integer> listValues = new ArrayList<>(Arrays.asList(arrayValues));
+        System.out.println("The original sequence is: " + "\n" + listValues);
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("The value to remove is: " + "\n" + valueToRemove);
+        System.out.println("---------------------------------------------------------------------------");
+        listValues.remove(valueToRemove);
+        Collections.shuffle(listValues);
+        System.out.println("The shuffled sequence is: " + "\n" + listValues);
+        System.out.println("---------------------------------------------------------------------------");
+
+        for (Integer arrayValue : arrayValues) {
+            if (!listValues.contains(arrayValue)) {
+                System.out.println("The value " + arrayValue + " was deleted from the original sequence");
+            }
+        }
+
+    }
 }
+
