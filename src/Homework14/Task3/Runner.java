@@ -52,7 +52,8 @@ public class Runner {
         int speedFilterMin = 190;
         int speedFilterMax = 240;
         for (Map.Entry entry : taxiStation.entrySet()) {
-            if (taxiStation.get(entry.getKey()).getSpeed() >= speedFilterMin && taxiStation.get(entry.getKey()).getSpeed() <= speedFilterMax) {
+            int carSpeed = taxiStation.get(entry.getKey()).getSpeed();
+            if (carSpeed >= speedFilterMin && carSpeed <= speedFilterMax) {
                 System.out.println(entry);
             }
         }
