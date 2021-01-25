@@ -16,30 +16,9 @@ public class Port {
     public static final int MAX_CAPACITY = 200; //max containers capacity
     public static final boolean[] DOCKS = new boolean[4]; //max ships capacity
     public static final Semaphore SEMAPHORE = new Semaphore(4, true);
-
-    private AtomicInteger currentCapacity = new AtomicInteger(0);
+    public static AtomicInteger currentCapacity = new AtomicInteger(0);
 
     public Port() {
-    }
-
-    public static boolean[] getDOCKS() {
-        return DOCKS;
-    }
-
-    public static Semaphore getSEMAPHORE() {
-        return SEMAPHORE;
-    }
-
-    public static int getMaxCapacity() {
-        return MAX_CAPACITY;
-    }
-
-    public AtomicInteger getCurrentCapacity() {
-        return currentCapacity;
-    }
-
-    public void setCurrentCapacity(AtomicInteger currentCapacity) {
-        this.currentCapacity = currentCapacity.get() <= MAX_CAPACITY && currentCapacity.get() > 0 ? currentCapacity : this.currentCapacity;
     }
 
     @Override
