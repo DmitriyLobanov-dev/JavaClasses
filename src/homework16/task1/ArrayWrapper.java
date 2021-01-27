@@ -32,7 +32,7 @@ public class ArrayWrapper<T> {
 
     //Определить метод получения элемента по индексу (счет ведется от 1, а не от 0).
     public T get(int indexValue) throws IncorrectArrayWrapperIndexException {
-        if (indexValue <= 0 || indexValue >= this.anyArray.length + 1) {
+        if (indexValue <= 0 || indexValue > this.anyArray.length) {
             throw new IncorrectArrayWrapperIndexException("Incorrect element index, must be >=1 & <= array.length");
         }
         return this.anyArray[indexValue - 1];
@@ -41,7 +41,7 @@ public class ArrayWrapper<T> {
     //Определить метод замены элемента по определенному индексу (пример: replace(1, “Test”)). Метод replace должен возвращать boolean значение успешности замены.
     public boolean replace(int indexValue, T value) {
         boolean result;
-        if (indexValue <= 0 || indexValue >= this.anyArray.length + 1) {
+        if (indexValue <= 0 || indexValue > this.anyArray.length) {
             throw new IncorrectArrayWrapperIndexException("Incorrect element index, should be >=1 & <= array.length");
         }
         //String. Заменить строку можно только на строку большей длины
