@@ -1,8 +1,12 @@
 package homework19.task2;
 
+import org.apache.log4j.PropertyConfigurator;
+
 public class Runner {
 
     public static void main(String[] args) {
+
+        PropertyConfigurator.configure("Log4j.properties");
 
         Thread ship1 = new Thread(new Ship(true, true, 50, 35));
         Thread ship2 = new Thread(new Ship(false, true, 50, 10));

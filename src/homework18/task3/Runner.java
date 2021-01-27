@@ -1,8 +1,13 @@
 package homework18.task3;
 
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -17,28 +22,32 @@ import java.util.List;
 public class Runner {
 
     public static void main(String[] args) {
+        PropertyConfigurator.configure("Log4j.properties");
+        Logger log = LoggerFactory.getLogger(Runner.class.getName());
+
+        ClientRepository clientRepository = new ClientRepository();
 
        //reading the source file and printing the content
-       ClientRepository.getAllExistingCustomersFromFile().stream().sorted((a,b) -> (int) (a.getID() - b.getID())).forEach(System.out::println);
+        clientRepository.getAllExistingCustomersFromFile().stream().sorted(Comparator.comparingLong(Customer::getID)).forEach(el -> log.info(String.valueOf(el)));
 
-        System.out.println("\n" + "----------------------------------------------------------------------------------------" + "\n");
+        log.info("\n" + "----------------------------------------------------------------------------------------" + "\n");
 
        //getting customer's shop list by his ID <Optional>
-        System.out.println(ClientRepository.getPurchasesByID(2));
+        log.info(clientRepository.getPurchasesByID(2).toString());
 
-        System.out.println("\n" + "----------------------------------------------------------------------------------------" + "\n");
+        log.info("\n" + "----------------------------------------------------------------------------------------" + "\n");
 
         //getting customer by his email <Optional>
-        System.out.println(ClientRepository.getCustomerByEmail("customer4@email.com"));
-        System.out.println(ClientRepository.getCustomerByEmail("customer10@email.com")); //doesn't exist
+        log.info(clientRepository.getCustomerByEmail("customer4@email.com").toString());
+        log.info(clientRepository.getCustomerByEmail("customer10@email.com").toString()); //doesn't exist
 
-        System.out.println("\n" + "----------------------------------------------------------------------------------------" + "\n");
+        log.info("\n" + "----------------------------------------------------------------------------------------" + "\n");
 
         //getting customer by his ID <Optional>
-        System.out.println(ClientRepository.getCustomerByID(5));
-        System.out.println(ClientRepository.getCustomerByID(50)); //doesn't exist
+        log.info(clientRepository.getCustomerByID(5).toString());
+        log.info(clientRepository.getCustomerByID(50).toString()); //doesn't exist
 
-        System.out.println("\n" + "----------------------------------------------------------------------------------------" + "\n");
+        log.info("\n" + "----------------------------------------------------------------------------------------" + "\n");
 
         //adding new customer with a purchase list and writing to the file
         ArrayList<Purchase> newPurchases = new ArrayList<>();
@@ -46,9 +55,9 @@ public class Runner {
         newPurchases.add(new Purchase("sugar"));
 
         try {
-            ClientRepository.writeCustomersFile(ClientRepository.addNewCustomer("name7", "customer7@email.com", newPurchases));
+            clientRepository.writeCustomersFile(clientRepository.addNewCustomer("name7", "customer7@email.com", newPurchases));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("Error while adding new customer to the file " + e.getMessage());
         }
 
 

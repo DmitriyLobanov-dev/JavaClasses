@@ -11,9 +11,9 @@ public class Runner {
 
     public static void main(String[] args) {
 
-        Runnable runableImplementation = new Task2RunableImplementation();
+        Runnable runnableImplementation = new Task2RunableImplementation();
         for (int i = 0; i < 3; i++) {
-            Thread thread = new Thread(runableImplementation);
+            Thread thread = new Thread(runnableImplementation);
             thread.start();
         }
 

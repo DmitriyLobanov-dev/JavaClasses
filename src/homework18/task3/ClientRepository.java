@@ -1,5 +1,8 @@
 package homework18.task3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.util.*;
 
@@ -14,11 +17,16 @@ import java.util.*;
 
 public class ClientRepository {
 
-    public static final File SOURCE = new File("D:\\JavaClasses\\src\\homework18\\task3\\CustomersList");
-    public static final File SOURCE_NEW = new File("D:\\JavaClasses\\src\\homework18\\task3\\CustomersList_added");
+    Logger log = LoggerFactory.getLogger(ClientRepository.class.getName());
+
+//    public static final File SOURCE = new File("D:\\JavaClasses\\src\\homework18\\task3\\sourceFile\CustomersList");
+//    public static final File SOURCE_NEW = new File("D:\\JavaClasses\\src\\homework18\\task3\\sourceFile\CustomersList_added");
+
+    public static final File SOURCE = new File("D:\\Self\\Java\\GitRepo\\JavaClasses\\src\\homework18\\task3\\sourceFile\\CustomersList");
+    public static final File SOURCE_NEW = new File("D:\\Self\\Java\\GitRepo\\JavaClasses\\src\\homework18\\task3\\sourceFile\\CustomersList_added");
 
     //Parse input file. Return HashSet collection with customers
-    public static Set<Customer> getAllExistingCustomersFromFile() {
+    public Set<Customer> getAllExistingCustomersFromFile() {
         Set<Customer> customers = new HashSet<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(SOURCE))) {
             Scanner scanner = new Scanner(reader);
@@ -40,15 +48,15 @@ public class ClientRepository {
             }
             scanner.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Error while reading the file. " + e.getMessage());
         }
         return customers;
     }
 
     //write HashSet<Customer> collection into file
-    public static void writeCustomersFile(Set<Customer> customers) throws IOException {
+    public void writeCustomersFile(Set<Customer> customers) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter(SOURCE_NEW));
-        customers.stream().sorted((a, b) -> (int) (a.getID() - b.getID())).forEach(customer -> {
+        customers.stream().sorted(Comparator.comparingLong(Customer::getID)).forEach(customer -> {
             try {
                 if (customer.getShopList() == null) {
                     writer.write(customer.getID() + " || " + customer.getName() + " || " + customer.getEmail() + " || " + "\n");
@@ -57,14 +65,14 @@ public class ClientRepository {
                             .replaceAll("[\\[\\]]", "") + "\n");
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                log.error("Error while executing the method writeCustomersFile. " + e.getMessage());
             }
         });
         writer.close();
     }
 
     //Add new customer and his shop list
-    public static Set<Customer> addNewCustomer(String name, String email, List<Purchase> purchases) {
+    public Set<Customer> addNewCustomer(String name, String email, List<Purchase> purchases) {
         Set<Customer> newCustomersCollection = getAllExistingCustomersFromFile();
         long newID = newCustomersCollection.stream().max((a, b) -> (int) (a.getID() - b.getID())).get().getID() + 1;
         if (purchases.isEmpty()) {
@@ -76,27 +84,30 @@ public class ClientRepository {
     }
 
     //Get customer's shop list by his ID <Optional>
-    public static Optional<List<Purchase>> getPurchasesByID(long ID) {
-        if (getAllExistingCustomersFromFile().stream().filter(customer2 -> customer2.getID() == ID).findFirst().isEmpty()) {
+    public Optional<List<Purchase>> getPurchasesByID(long id) {
+        Optional<Customer> customerTemp = getAllExistingCustomersFromFile().stream().filter(customer2 -> customer2.getID() == id).findFirst();
+        if (customerTemp.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.ofNullable(getAllExistingCustomersFromFile().stream().filter(customer2 -> customer2.getID() == ID).findFirst().get().getShopList());
+        return Optional.ofNullable(customerTemp.get().getShopList());
     }
 
     //Get customer by his email <Optional>
-    public static Optional<Customer> getCustomerByEmail(String email) {
-        if (getAllExistingCustomersFromFile().stream().filter(customer -> customer.getEmail().equals(email)).findFirst().isEmpty()) {
+    public Optional<Customer> getCustomerByEmail(String email) {
+        Optional<Customer> customerTemp = getAllExistingCustomersFromFile().stream().filter(customer -> customer.getEmail().equals(email)).findFirst();
+        if (customerTemp.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(getAllExistingCustomersFromFile().stream().filter(customer -> customer.getEmail().equals(email)).findFirst().get());
+        return Optional.of(customerTemp.get());
     }
 
     //Get customer by his ID <Optional>
-    public static Optional<Customer> getCustomerByID(long ID) {
-        if (getAllExistingCustomersFromFile().stream().filter(customer -> customer.getID() == ID).findFirst().isEmpty()) {
+    public Optional<Customer> getCustomerByID(long id) {
+        Optional<Customer> customerTemp = getAllExistingCustomersFromFile().stream().filter(customer -> customer.getID() == id).findFirst();
+        if (customerTemp.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(getAllExistingCustomersFromFile().stream().filter(customer -> customer.getID() == ID).findFirst().get());
+        return Optional.of(customerTemp.get());
     }
 
 

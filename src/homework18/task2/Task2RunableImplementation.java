@@ -16,7 +16,7 @@ public class Task2RunableImplementation implements Runnable{
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    System.out.println("Error while trying to sleep. " + e.getMessage());
                 }
                 System.out.println(i);
             }

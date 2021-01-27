@@ -1,9 +1,14 @@
 package homework19.task3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ProducerThread implements Runnable{
+
+    Logger log = LoggerFactory.getLogger(ProducerThread.class.getName());
 
     BlockingQueue<Integer>  queue;
 
@@ -17,15 +22,15 @@ public class ProducerThread implements Runnable{
             try {
                 int value = (int) (Math.random() * 100);
                 queue.put(value);
-                System.out.println("Producer: The value " + value + " has been added to the queue");
-                System.out.println("Producer: Queue current size is: " + queue.size());
+                log.info("Producer: The value " + value + " has been added to the queue");
+                log.info("Producer: Queue current size is: " + queue.size());
             } catch (InterruptedException e) {
-                System.out.println("Producer: Error trying to put an element: " + e.getMessage());
+                log.error("Producer: Error trying to put an element: " + e.getMessage());
             }
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
-                System.out.println("Producer: Error while trying to sleep: " + e.getMessage());
+                log.error("Producer: Error while trying to sleep: " + e.getMessage());
             }
         }
     }

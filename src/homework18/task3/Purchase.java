@@ -1,5 +1,8 @@
 package homework18.task3;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Objects;
 
 /**
@@ -12,6 +15,8 @@ import java.util.Objects;
  */
 
 public class Purchase {
+
+    Logger log = LoggerFactory.getLogger(Purchase.class.getName());
 
     private String title;
 

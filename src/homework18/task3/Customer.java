@@ -14,26 +14,26 @@ import java.util.Objects;
 
 public class Customer {
 
-    private final long ID;
+    private final long id;
     private String name;
     private String email;
     private List<Purchase> shopList;
 
     public Customer(long ID, String name, String email, List<Purchase> shopList) {
-        this.ID = ID;
+        this.id = ID;
         this.name = name;
         this.email = email;
         this.shopList = shopList;
     }
 
-    public Customer(long ID, String name, String email) {
-        this.ID = ID;
+    public Customer(long id, String name, String email) {
+        this.id = id;
         this.name = name;
         this.email = email;
     }
 
     public long getID() {
-        return ID;
+        return id;
     }
 
     public String getName() {
@@ -61,19 +61,19 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(ID, customer.ID) &&
+        return Objects.equals(id, customer.id) &&
                 Objects.equals(email, customer.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, email);
+        return Objects.hash(id, email);
     }
 
     @Override
     public String toString() {
         return "Customer{" +
-                "ID='" + ID + '\'' +
+                "ID='" + id + '\'' +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", shopList=" + shopList +
