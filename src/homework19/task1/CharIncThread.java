@@ -32,7 +32,8 @@ public class CharIncThread extends Thread {
             }
             System.out.println();
             ch += 1;
-            str.replace(0, 1, String.valueOf(ch));
+//            str.replace(0, 1, String.valueOf(ch));
+            str.setCharAt(0, ch);
         }
     }
 }
